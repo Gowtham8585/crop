@@ -1,0 +1,4 @@
+Crop,N_needed,P_needed,K_needed,Soil_Type,Fertilizer,Kg_per_acre
+Rice,80,40,40,Clayey,Urea,50
+Rice,80,40,40,Loamy,DAP,30
+Maize,70,35,30,Sandy,NPK 14-35-14,40

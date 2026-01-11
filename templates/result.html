@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendation Result</title>
+    <style>
+        :root {
+            --primary: #2ecc71;
+            --secondary: #e67e22;
+            --dark: #2c3e50;
+            --glass: rgba(255, 255, 255, 0.1);
+            --border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: white;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.9em;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #fff;
+            font-size: 1.5em;
+        }
+
+        h3 {
+            margin: 10px 0;
+            color: #f1c40f;
+            font-size: 1.2em;
+        }
+
+        .main-rec {
+            text-align: center;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+        }
+
+        .crop-title {
+            font-size: 3em;
+            font-weight: 800;
+            margin: 10px 0;
+            color: #fff;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: #27ae60;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin-bottom: 15px;
+        }
+
+        .score-box {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-val {
+            font-size: 1.5em;
+            font-weight: bold;
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.8em;
+            opacity: 0.8;
+        }
+
+        .timeline {
+            margin-top: 20px;
+            border-left: 3px solid rgba(255, 255, 255, 0.3);
+            padding-left: 20px;
+        }
+
+        .timeline-item {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: #f1c40f;
+            border-radius: 50%;
+            position: absolute;
+            left: -27.5px;
+            top: 5px;
+        }
+
+        .table-custom {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .table-custom th {
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 8px;
+            color: #f1c40f;
+        }
+
+        .table-custom td {
+            padding: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .market-up {
+            color: #072413;
+        }
+
+        .market-down {
+            color: #e74c3c;
+        }
+    </style>
+
+    <style>
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                width: 100%;
+            }
+
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .back-btn {
+                width: 100%;
+                text-align: center;
+                box-sizing: border-box;
+            }
+
+            .score-box {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .metric {
+                flex: 1 1 40%;
+                margin-bottom: 10px;
+            }
+
+            .crop-title {
+                font-size: 2em;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .table-custom {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h2>AgriAdvisor TN <span style="font-size:0.7em; opacity:0.8;">| விவசாய ஆலோசகர்</span></h2>
+            <a href="/" class="back-btn">← New Search / புதிய தேடல்</a>
+        </div>
+
+        <div class="dashboard">
+            <!-- Left Column -->
+            <div class="left-col">
+                <div class="card">
+                    <div class="main-rec">
+                        <span class="badge">Top Recommendation / சிறந்த பரிந்துரை</span>
+                        <div class="crop-title">
+                            🌱 {{ result.best_crop }} <br>
+                            <span style="font-size:0.5em; color:#f1c40f;">{{ tamil_crops.get(result.best_crop, '')
+                                }}</span>
+                        </div>
+                        <p>{{ result.analysis }}</p>
+
+                        <div class="score-box">
+                            <div class="metric">
+                                <span class="metric-val">{{ result.weather_context.temperature|round(1) }}°C</span>
+                                <span class="metric-label">Avg Temp / வெப்பநிலை</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-val">{{ result.weather_context.rainfall|round(0) }}mm</span>
+                                <span class="metric-label">Rainfall / மழை</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-val">₹{{ result.top_recommendations[0].market_price }}</span>
+                                <span class="metric-label">Est. Price / விலை</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>🧪 Fertilizer Plan / உர அட்டவணை</h3>
+
+                    <table class="table-custom">
+                        <thead>
+                            <tr>
+                                <th>Fertilizer / உரம்</th>
+                                <th>Quantity / அளவு</th>
+                                <th>Reason / காரணம்</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in result.fertilizer_plan.inputs %}
+                            <tr>
+                                <td>{{ item.fertilizer }}</td>
+                                <td>{{ item.quantity }} {{ item.unit }}</td>
+                                <td>{{ item.reason }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    <h4 style="margin-top:20px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom:5px;">📅
+                        Application Schedule / இடும் முறை</h4>
+                    <div class="timeline">
+                        {% for step in result.fertilizer_plan.schedule %}
+                        <div class="timeline-item">
+                            {{ step }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="right-col">
+                <div class="card">
+                    <h3>📊 Top Candidates / மற்ற பயிர்கள்</h3>
+                    <table class="table-custom">
+                        <thead>
+                            <tr>
+                                <th>Crop / பயிர்</th>
+                                <th>Score / மதிப்பெண்</th>
+                                <th>Trend / போக்கு</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for crop in result.top_recommendations %}
+                            <tr>
+                                <td>
+                                    {{ crop.crop }}<br>
+                                    <span style="font-size:0.8em; color:#bbb;">{{ tamil_crops.get(crop.crop, '')
+                                        }}</span>
+                                </td>
+                                <td>{{ crop.final_score }}</td>
+                                <td class="{{ 'market-up' if crop.price_trend == 'up' else 'market-down' }}">
+                                    {{ crop.price_trend|upper }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <h3>⚠️ Advisory Note / குறிப்பு</h3>
+                    <p style="font-size: 0.9em; line-height: 1.5; opacity: 0.8;">
+                        Recommendations are based on soil health and current market trends in {{ result.inputs.district
+                        }}.
+                        Please ensure soil moisture is adequate before fertilizer application.
+                        <br><br>
+                        இப்பரிந்துரைகள் மண் வளம் மற்றும் சந்தை நிலவரத்தை அடிப்படையாகக் கொண்டவை. உரமிடுவதற்கு முன் மண்
+                        ஈரம் இருப்பதை உறுதி செய்யவும்.
+                    </p>
+                </div>
+
+                <div class="card" style="text-align: center;">
+                    <h3>Soil Status / மண் நிலை</h3>
+                    <div style="display:flex; justify-content:space-between; margin-top:15px;">
+                        <div>
+                            <span style="display:block; font-size:1.2em; font-weight:bold; color: #eebb99;">{{
+                                result.inputs.soil.N }}</span>
+                            <span style="font-size:0.8em">N (தழை)</span>
+                        </div>
+                        <div>
+                            <span style="display:block; font-size:1.2em; font-weight:bold; color: #aabbaa;">{{
+                                result.inputs.soil.P }}</span>
+                            <span style="font-size:0.8em">P (மணி)</span>
+                        </div>
+                        <div>
+                            <span style="display:block; font-size:1.2em; font-weight:bold; color: #ccaaee;">{{
+                                result.inputs.soil.K }}</span>
+                            <span style="font-size:0.8em">K (சாம்பல்)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
