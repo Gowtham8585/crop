@@ -1,0 +1,328 @@
+/* Result.css and Layout Overrides */
+
+.result-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.back-btn {
+    text-decoration: none;
+    color: white;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 0.9em;
+    transition: 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+.back-btn:hover {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+.card {
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin-top: 0;
+    color: #fff;
+    font-size: 1.5em;
+}
+
+h3 {
+    margin: 10px 0;
+    color: #f1c40f;
+    font-size: 1.2em;
+}
+
+.main-rec {
+    text-align: center;
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+}
+
+.crop-title {
+    font-size: 3em;
+    font-weight: 800;
+    margin: 10px 0;
+    color: #fff;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.badge {
+    display: inline-block;
+    padding: 5px 15px;
+    background: #27ae60;
+    border-radius: 15px;
+    font-size: 0.8em;
+    margin-bottom: 15px;
+}
+
+.score-box {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.metric {
+    text-align: center;
+}
+
+.metric-val {
+    font-size: 1.5em;
+    font-weight: bold;
+    display: block;
+}
+
+.metric-label {
+    font-size: 0.8em;
+    opacity: 0.8;
+}
+
+.timeline {
+    margin-top: 20px;
+    border-left: 3px solid rgba(255, 255, 255, 0.3);
+    padding-left: 20px;
+}
+
+.timeline-item {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.timeline-item::before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background: #f1c40f;
+    border-radius: 50%;
+    position: absolute;
+    left: -27.5px;
+    top: 5px;
+}
+
+.table-custom {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.table-custom th {
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 8px;
+    color: #f1c40f;
+}
+
+.table-custom td {
+    padding: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.market-up {
+    color: #072413;
+}
+
+.market-down {
+    color: #e74c3c;
+}
+
+/* Home Page Styles */
+.container {
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    margin: 20px auto;
+    /* Centered in App view */
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #fff;
+    /* Changed from black in original to fit dark theme better or #030705 */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Revert h1 color if it was meant to be dark? 
+   Original CSS had: h1 { color: #030705; }
+   But background is dark blue gradient. Dark text might be hard to read unless container is light.
+   Container is --glass (white 0.1).
+   Let's keep it white for safety.
+*/
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.9em;
+    color: #dcdde1;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: white;
+    font-size: 1em;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #2ecc71;
+}
+
+option {
+    background: #2c3e50;
+    color: white;
+}
+
+.btn-grad {
+    background-image: linear-gradient(to right, #1D976C 0%, #93F9B9 51%, #1D976C 100%);
+    margin-top: 20px;
+    padding: 15px 45px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    display: block;
+    width: 100%;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-grad:hover {
+    background-position: right center;
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.8em;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.row {
+    display: flex;
+    gap: 15px;
+}
+
+.col {
+    flex: 1;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        width: 90%;
+        margin: 20px auto;
+    }
+
+    .row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    .btn-grad {
+        padding: 15px;
+    }
+
+    /* Dashboard mobile styles */
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .back-btn {
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .score-box {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .metric {
+        flex: 1 1 40%;
+        margin-bottom: 10px;
+    }
+
+    .crop-title {
+        font-size: 2em;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .table-custom {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+.app-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}

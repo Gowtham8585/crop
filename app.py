@@ -1,21 +1,14 @@
 from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS
 from src.recommender import RecommenderSystem
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='frontend/dist', static_url_path='')
+CORS(app)
 recommender = RecommenderSystem()
 
 @app.route('/')
 def index():
-    districts = [
-        'Ariyalur', 'Chengalpattu', 'Chennai', 'Coimbatore', 'Cuddalore', 'Dharmapuri', 
-        'Dindigul', 'Erode', 'Kallakurichi', 'Kancheepuram', 'Karur', 'Krishnagiri', 
-        'Madurai', 'Mayiladuthurai', 'Nagapattinam', 'Namakkal', 'Nilgiris', 'Perambalur', 
-        'Pudukkottai', 'Ramanathapuram', 'Ranipet', 'Salem', 'Sivaganga', 'Tenkasi', 
-        'Thanjavur', 'Theni', 'Thoothukudi', 'Tiruchirappalli', 'Tirunelveli', 'Tirupattur', 
-        'Tiruppur', 'Tiruvallur', 'Tiruvannamalai', 'Tiruvarur', 'Vellore', 'Viluppuram', 
-        'Virudhunagar'
-    ]
-    return render_template('index.html', districts=districts)
+    return app.send_static_file('index.html')
 
 @app.route('/recommend', methods=['POST'])
 def recommend():
